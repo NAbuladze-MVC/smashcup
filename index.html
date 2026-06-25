@@ -506,7 +506,7 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
     if(!f.checkValidity()){ f.reportValidity(); return; }
     btn.setAttribute('disabled','');
     var data=new FormData(f);
-    fetch('https://formsubmit.co/ajax/tbilisismashcup@gmail.com',{method:'POST',body:data,headers:{'Accept':'application/json'}})
+    fetch('https://formsubmit.co/ajax/nikoabuladze2018@gmail.com',{method:'POST',body:data,headers:{'Accept':'application/json'}})
       .then(function(r){return r.json();})
       .then(function(j){
         if(j.success===true || j.success==='true'){ f.style.display='none'; ok.style.display='block'; ok.scrollIntoView({behavior:'smooth',block:'center'}); if(window.track) track('registration_submitted',{}); }
