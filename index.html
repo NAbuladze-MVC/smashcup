@@ -318,6 +318,7 @@
           <input type="hidden" name="_captcha" value="false">
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <input type="hidden" name="_next" value="https://smashcup.fit/?registered=1">
+          <input type="hidden" name="_webhook" value="https://script.google.com/macros/s/AKfycbxx4GsH_D217GR09aRNCiGZaQAAwhBIVHiB0co3uF26VxQVq-_WfxYikImewRhk8Cxi/exec">
           <div class="fld">
             <label data-ka="გუნდის სახელი" data-en="Team name">გუნდის სახელი</label>
             <input name="Team name" required data-ka-ph="მაგ. Smash Bros" data-en-ph="e.g. Smash Bros" placeholder="მაგ. Smash Bros">
@@ -506,13 +507,7 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
   var btn=document.getElementById('regSubmit'), err=document.getElementById('regErr'), ok=document.getElementById('regOk');
   var started=false;
   f.addEventListener('focusin',function(){ if(!started){started=true; if(window.track) track('registration_start',{});} });
-  var SHEET_WEBHOOK='https://script.google.com/macros/s/AKfycbxx4GsH_D217GR09aRNCiGZaQAAwhBIVHiB0co3uF26VxQVq-_WfxYikImewRhk8Cxi/exec';
   f.addEventListener('submit',function(){
-    try{
-      var fd=new FormData();
-      ['Team name','Player 1','Player 2','Phone','Email','Level','Notes'].forEach(function(n){ var el=f.elements[n]; fd.append(n, el?el.value:''); });
-      if(navigator.sendBeacon) navigator.sendBeacon(SHEET_WEBHOOK, fd);
-    }catch(_){}
     if(window.track) track('registration_submit_click',{});
     setTimeout(function(){ btn.setAttribute('disabled',''); var s=btn.querySelector('span'); if(s) s.textContent=(document.documentElement.lang==='en'?'Sending…':'იგზავნება…'); },0);
   });
