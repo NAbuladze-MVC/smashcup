@@ -27,10 +27,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <!-- ===== Google Analytics 4 ===== -->
-<!-- TODO: replace G-D793M728WD (two places) with your real GA4 Measurement ID from analytics.google.com -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D793M728WD"></script>
+<!-- TODO: replace G-G2HQ93G7BK (two places) with your real GA4 Measurement ID from analytics.google.com -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G2HQ93G7BK"></script>
 <script>
-  window.GA_ID = 'G-D793M728WD';
+  window.GA_ID = 'G-G2HQ93G7BK';
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -506,7 +506,7 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
   var btn=document.getElementById('regSubmit'), err=document.getElementById('regErr'), ok=document.getElementById('regOk');
   var started=false;
   f.addEventListener('focusin',function(){ if(!started){started=true; if(window.track) track('registration_start',{});} });
-  var SHEET_WEBHOOK='https://script.google.com/macros/s/AKfycbwoe4OuT9SR9ienrjqei83xmQI7rhsJrDc3VtBTgffRbc5wLTPiqQPRYTrgH7GpQoVJlA/exec';
+  var SHEET_WEBHOOK='https://script.google.com/macros/s/AKfycbxx4GsH_D217GR09aRNCiGZaQAAwhBIVHiB0co3uF26VxQVq-_WfxYikImewRhk8Cxi/exec';
   f.addEventListener('submit',function(){
     try{
       var fd=new FormData();
