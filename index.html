@@ -25,6 +25,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Georgian:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<!-- ===== Google Analytics 4 ===== -->
+<!-- TODO: replace G-XXXXXXXXXX (two places) with your real GA4 Measurement ID from analytics.google.com -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.GA_ID = 'G-XXXXXXXXXX';
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  if(window.GA_ID && window.GA_ID.indexOf('XXXX')===-1){ gtag('config', window.GA_ID, {anonymize_ip:true}); }
+  window.track = function(name, params){ try{ if(window.GA_ID && window.GA_ID.indexOf('XXXX')===-1){ gtag('event', name, params||{}); } }catch(e){} };
+</script>
 <style>
   :root{
     --volt:#C6FB46; --volt2:#A6D62E; --black:#070707; --surf:#0e0f0d;
@@ -148,6 +160,23 @@
   footer .links a:hover{color:var(--volt)}
   .hide{display:none!important}
   .sectnum{position:absolute;right:24px;top:40px;font-family:'Anton';font-size:14px;color:rgba(255,255,255,.18);z-index:1}
+
+  /* registration form */
+  .rform{display:flex;flex-direction:column;gap:14px;margin-top:10px}
+  .rform .fld{display:flex;flex-direction:column;gap:6px}
+  .rform label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--grey);font-weight:700}
+  .rform input,.rform select,.rform textarea{background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:13px 14px;color:#fff;font-family:inherit;font-size:15px;transition:.2s}
+  .rform input:focus,.rform select:focus,.rform textarea:focus{outline:none;border-color:var(--volt);box-shadow:0 0 0 3px rgba(198,251,70,.12)}
+  .rform input::placeholder,.rform textarea::placeholder{color:#5e6469}
+  .rform .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:520px){.rform .row{grid-template-columns:1fr}}
+  .rform .sb{margin-top:6px;width:100%;justify-content:center;font-size:16px;padding:16px}
+  .rform .sb[disabled]{opacity:.6;cursor:wait}
+  .rmsg{margin-top:6px;font-size:14px;border-radius:12px;padding:12px 14px;display:none}
+  .rmsg.err{display:block;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.4);color:#ffb3b3}
+  .rok{display:none;text-align:center;padding:18px 0}
+  .rok .ic{font-size:54px}
+  .rok .big{font-size:clamp(26px,5vw,42px);color:var(--volt);margin-top:6px}
 </style>
 </head>
 <body class="geo">
@@ -160,7 +189,7 @@
       <button id="lka" class="on" onclick="setLang('ka')">ქარ</button>
       <button id="len" onclick="setLang('en')">ENG</button>
     </div>
-    <a class="btn primary desk" href="#register"><span data-ka="რეგისტრაცია" data-en="Register">რეგისტრაცია</span></a>
+    <a class="btn primary desk" href="#register" onclick="track('cta_click',{location:'nav',label:'register'})"><span data-ka="რეგისტრაცია" data-en="Register">რეგისტრაცია</span></a>
   </div>
 </nav>
 
@@ -180,8 +209,8 @@
       <div class="u"><div class="n" id="cs">00</div><div class="l" data-ka="წამი" data-en="sec">sec</div></div>
     </div>
     <div class="cta">
-      <a class="btn primary" href="#register"><span data-ka="დარეგისტრირდი" data-en="Register now">დარეგისტრირდი</span></a>
-      <a class="btn ghost" href="#format"><span data-ka="ფორმატი" data-en="See format">ფორმატი</span></a>
+      <a class="btn primary" href="#register" onclick="track('cta_click',{location:'hero',label:'register'})"><span data-ka="დარეგისტრირდი" data-en="Register now">დარეგისტრირდი</span></a>
+      <a class="btn ghost" href="#format" onclick="track('cta_click',{location:'hero',label:'format'})"><span data-ka="ფორმატი" data-en="See format">ფორმატი</span></a>
     </div>
   </div>
 </section>
@@ -220,11 +249,12 @@
   <span class="sectnum">03</span>
   <div class="wrap">
     <div class="eyebrow reveal" data-ka="საპრიზო ფონდი" data-en="Prize fund">საპრიზო ფონდი</div>
-    <h2 class="big reveal" data-ka="2,500 ₾ სათამაშოდ" data-en="2,500 ₾ on the line">2,500 ₾ სათამაშოდ</h2>
+    <h2 class="big reveal" data-ka="4,000 ₾ ვაუჩერებში" data-en="4,000 ₾ in vouchers">4,000 ₾ ვაუჩერებში</h2>
+    <p class="lead reveal" data-ka="საპრიზო ფონდი გაიცემა პადელბადეს ვაუჩერების სახით — სათამაშო დრო, აღჭურვილობა და მეტი." data-en="The prize fund is awarded as Padelbade vouchers — court time, gear and more.">საპრიზო ფონდი გაიცემა პადელბადეს ვაუჩერების სახით — სათამაშო დრო, აღჭურვილობა და მეტი.</p>
     <div class="prize">
-      <div class="p first reveal"><div class="pos" data-ka="I ადგილი" data-en="1st place">I ადგილი</div><div class="amt">1,200₾</div></div>
-      <div class="p reveal"><div class="pos" data-ka="II ადგილი" data-en="2nd place">II ადგილი</div><div class="amt">800₾</div></div>
-      <div class="p reveal"><div class="pos" data-ka="III ადგილი" data-en="3rd place">III ადგილი</div><div class="amt">500₾</div></div>
+      <div class="p first reveal"><div class="pos" data-ka="I ადგილი" data-en="1st place">I ადგილი</div><div class="amt">2,500₾</div><div class="pos" style="margin-top:10px;color:var(--volt2)" data-ka="პადელბადეს ვაუჩერი" data-en="Padelbade voucher">პადელბადეს ვაუჩერი</div></div>
+      <div class="p reveal"><div class="pos" data-ka="II ადგილი" data-en="2nd place">II ადგილი</div><div class="amt">1,000₾</div><div class="pos" style="margin-top:10px" data-ka="პადელბადეს ვაუჩერი" data-en="Padelbade voucher">პადელბადეს ვაუჩერი</div></div>
+      <div class="p reveal"><div class="pos" data-ka="III ადგილი" data-en="3rd place">III ადგილი</div><div class="amt">500₾</div><div class="pos" style="margin-top:10px" data-ka="პადელბადეს ვაუჩერი" data-en="Padelbade voucher">პადელბადეს ვაუჩერი</div></div>
     </div>
   </div>
 </section>
@@ -245,9 +275,23 @@
   </div>
 </section>
 
+<!-- ROAD TO THE COURT -->
+<section id="road">
+  <span class="sectnum">05</span>
+  <div class="wrap">
+    <div class="eyebrow reveal" data-ka="როგორ მოხვდები კორტზე" data-en="How to get on court">როგორ მოხვდები კორტზე</div>
+    <h2 class="big reveal" data-ka="სამი ნაბიჯი კორტამდე" data-en="Three steps to the court">სამი ნაბიჯი კორტამდე</h2>
+    <div class="grid g3">
+      <div class="card reveal"><div class="k">01</div><h3 data-ka="რეგისტრაცია და გადახდა" data-en="Register and pay">რეგისტრაცია და გადახდა</h3><p data-ka="შეავსე გუნდის სარეგისტრაციო ფორმა აქვე საიტზე და გადაიხადე საფასური მითითებულ ანგარიშზე." data-en="Fill in the team registration form right here on the site and pay the fee to the listed account.">შეავსე გუნდის სარეგისტრაციო ფორმა აქვე საიტზე და გადაიხადე საფასური მითითებულ ანგარიშზე.</p></div>
+      <div class="card reveal"><div class="k">02</div><h3 data-ka="ჯგუფური ეტაპი" data-en="Group stage">ჯგუფური ეტაპი</h3><p data-ka="32 გუნდი იყოფა 8 ჯგუფად (4 გუნდი თითო ჯგუფში). თითო ჯგუფიდან საუკეთესო ორი გადადის შემდეგ ეტაპზე." data-en="32 teams split into 8 groups of 4. The top two from each group advance.">32 გუნდი იყოფა 8 ჯგუფად (4 გუნდი თითო ჯგუფში). თითო ჯგუფიდან საუკეთესო ორი გადადის შემდეგ ეტაპზე.</p></div>
+      <div class="card reveal"><div class="k">03</div><h3 data-ka="პლეი-ოფი და ფინალი" data-en="Play-offs and final">პლეი-ოფი და ფინალი</h3><p data-ka="1/8 → 1/4 → ნახევარფინალი → ფინალი. ერთი ჩემპიონი, 4,000 ₾ საპრიზო ფონდი ვაუჩერებში." data-en="Round of 16 → quarters → semis → final. One champion, a 4,000 ₾ voucher prize fund.">1/8 → 1/4 → ნახევარფინალი → ფინალი. ერთი ჩემპიონი, 4,000 ₾ საპრიზო ფონდი ვაუჩერებში.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- PARTNERS -->
 <section id="partners">
-  <span class="sectnum">05</span>
+  <span class="sectnum">06</span>
   <div class="wrap split">
     <div class="reveal">
       <div class="eyebrow" data-ka="პარტნიორები & მედია" data-en="Partners & media">პარტნიორები & მედია</div>
@@ -262,27 +306,86 @@
 
 <!-- REGISTER -->
 <section id="register">
-  <span class="sectnum">06</span>
+  <span class="sectnum">07</span>
   <div class="wrap">
     <div class="eyebrow reveal" data-ka="რეგისტრაცია" data-en="Registration">რეგისტრაცია</div>
     <h2 class="big reveal" data-ka="დაიკავე შენი ადგილი" data-en="Claim your spot">დაიკავე შენი ადგილი</h2>
     <div class="reg">
       <div class="box reveal">
-        <div class="tag" style="color:var(--grey);font-size:12px;letter-spacing:2px" data-ka="საფასური გუნდზე" data-en="Fee per team">საფასური გუნდზე</div>
-        <div class="fee">240₾</div>
-        <div class="step"><div class="num">1</div><p data-ka="გადაიხადე საფასური ქვემოთ მითითებულ ანგარიშზე." data-en="Pay the fee to one of the accounts below.">გადაიხადე საფასური ქვემოთ მითითებულ ანგარიშზე.</p></div>
-        <div class="step"><div class="num">2</div><p data-ka="შეავსე სარეგისტრაციო ფორმა და ატვირთე გადახდის ქვითარი." data-en="Fill in the registration form and upload the payment receipt.">შეავსე სარეგისტრაციო ფორმა და ატვირთე გადახდის ქვითარი.</p></div>
-        <div class="step"><div class="num">3</div><p data-ka="ჯგუფების გათამაშება გამოქვეყნდება ჩვენს WhatsApp ჯგუფში." data-en="The group draw will be posted in our WhatsApp group.">ჯგუფების გათამაშება გამოქვეყნდება ჩვენს WhatsApp ჯგუფში.</p></div>
-        <a class="btn primary bigcta" href="https://docs.google.com/forms/d/e/1FAIpQLSe7udf_oRX3-xnVG6AIzAO8zHOGnfuYl5FmVw6LYmxKJb0b7A/viewform" target="_blank" rel="noopener"><span data-ka="გახსენი სარეგისტრაციო ფორმა" data-en="Open registration form">გახსენი სარეგისტრაციო ფორმა</span> →</a>
+        <div class="tag" style="color:var(--grey);font-size:12px;letter-spacing:2px" data-ka="გუნდის რეგისტრაცია" data-en="Team registration">გუნდის რეგისტრაცია</div>
+        <form id="regForm" class="rform" novalidate>
+          <input type="hidden" name="_subject" value="New Tbilisi Smash Cup registration">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+          <div class="fld">
+            <label data-ka="გუნდის სახელი" data-en="Team name">გუნდის სახელი</label>
+            <input name="Team name" required data-ka-ph="მაგ. Smash Bros" data-en-ph="e.g. Smash Bros" placeholder="მაგ. Smash Bros">
+          </div>
+          <div class="row">
+            <div class="fld">
+              <label data-ka="მოთამაშე 1" data-en="Player 1">მოთამაშე 1</label>
+              <input name="Player 1" required data-ka-ph="სახელი გვარი" data-en-ph="Full name" placeholder="სახელი გვარი">
+            </div>
+            <div class="fld">
+              <label data-ka="მოთამაშე 2" data-en="Player 2">მოთამაშე 2</label>
+              <input name="Player 2" required data-ka-ph="სახელი გვარი" data-en-ph="Full name" placeholder="სახელი გვარი">
+            </div>
+          </div>
+          <div class="row">
+            <div class="fld">
+              <label data-ka="ტელეფონი (WhatsApp)" data-en="Phone (WhatsApp)">ტელეფონი (WhatsApp)</label>
+              <input name="Phone" type="tel" required data-ka-ph="+995 5xx xx xx xx" data-en-ph="+995 5xx xx xx xx" placeholder="+995 5xx xx xx xx">
+            </div>
+            <div class="fld">
+              <label data-ka="ელ. ფოსტა (სურვ.)" data-en="Email (optional)">ელ. ფოსტა (სურვ.)</label>
+              <input name="Email" type="email" data-ka-ph="you@email.com" data-en-ph="you@email.com" placeholder="you@email.com">
+            </div>
+          </div>
+          <div class="fld">
+            <label data-ka="დონე" data-en="Level">დონე</label>
+            <select name="Level">
+              <option value="" data-ka="აირჩიე დონე" data-en="Select level">აირჩიე დონე</option>
+              <option value="Beginner" data-ka="დამწყები" data-en="Beginner">დამწყები</option>
+              <option value="Intermediate" data-ka="საშუალო" data-en="Intermediate">საშუალო</option>
+              <option value="Advanced" data-ka="გამოცდილი" data-en="Advanced">გამოცდილი</option>
+            </select>
+          </div>
+          <div class="fld">
+            <label data-ka="კომენტარი (სურვ.)" data-en="Notes (optional)">კომენტარი (სურვ.)</label>
+            <textarea name="Notes" rows="2" data-ka-ph="დამატებითი ინფორმაცია..." data-en-ph="Anything we should know..." placeholder="დამატებითი ინფორმაცია..."></textarea>
+          </div>
+          <button type="submit" class="btn primary sb" id="regSubmit"><span data-ka="გაგზავნა" data-en="Submit registration">გაგზავნა</span> →</button>
+          <div class="rmsg" id="regErr" data-ka="დაფიქსირდა შეცდომა. სცადე ხელახლა ან მოგვწერე Instagram-ზე." data-en="Something went wrong. Please try again or DM us on Instagram.">დაფიქსირდა შეცდომა. სცადე ხელახლა ან მოგვწერე Instagram-ზე.</div>
+        </form>
+        <div class="rok" id="regOk">
+          <div class="ic">🎾</div>
+          <div class="big disp" data-ka="რეგისტრაცია მიღებულია!" data-en="Registration received!">რეგისტრაცია მიღებულია!</div>
+          <p class="lead" style="margin:10px auto 0" data-ka="ახლა გადაიხადე საფასური (240₾) გვერდით მითითებულ ანგარიშზე — ადგილს დაგიდასტურებთ WhatsApp-ით." data-en="Now pay the fee (240₾) to the account shown beside this form — we'll confirm your spot on WhatsApp.">ახლა გადაიხადე საფასური (240₾) გვერდით მითითებულ ანგარიშზე — ადგილს დაგიდასტურებთ WhatsApp-ით.</p>
+        </div>
       </div>
       <div class="box reveal">
-        <div class="tag" style="color:var(--grey);font-size:12px;letter-spacing:2px" data-ka="გადახდის რეკვიზიტები" data-en="Payment details">გადახდის რეკვიზიტები</div>
+        <div class="tag" style="color:var(--grey);font-size:12px;letter-spacing:2px" data-ka="საფასური გუნდზე" data-en="Fee per team">საფასური გუნდზე</div>
+        <div class="fee">240₾</div>
+        <div class="tag" style="color:var(--grey);font-size:12px;letter-spacing:2px;margin-top:18px" data-ka="გადახდის რეკვიზიტები" data-en="Payment details">გადახდის რეკვიზიტები</div>
         <div class="bank">TBC · <b>GE33TB7432245061100116</b></div>
         <div class="bank">BOG · <b>GE50BG0000000611468898</b></div>
         <div class="bank" data-ka="მიმღები · არჩილ შარაშიძე" data-en="Recipient · Archil Sharashidze">მიმღები · არჩილ შარაშიძე</div>
-        <div class="bank" data-ka="დანიშნულება · Tbilisi Smash Cup Registration" data-en="Reference · Tbilisi Smash Cup Registration">დანიშნულება · Tbilisi Smash Cup Registration</div>
+        <div class="bank" data-ka="დანიშნულება · გუნდის სახელი + Smash Cup" data-en="Reference · Team name + Smash Cup">დანიშნულება · გუნდის სახელი + Smash Cup</div>
         <p class="lead" style="font-size:14px;margin-top:18px" data-ka="ასაკი 16+. მონაწილეობა ვერ მიიღებენ პროფესიონალები, სრულ განაკვეთზე მწვრთნელები და ფედერაციის A-კატეგორიის მოთამაშეები." data-en="Age 16+. Pros, full-time coaches and Federation A-category players are not eligible.">ასაკი 16+. მონაწილეობა ვერ მიიღებენ პროფესიონალები, სრულ განაკვეთზე მწვრთნელები და ფედერაციის A-კატეგორიის მოთამაშეები.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING CTA -->
+<section id="finalcta" style="padding:84px 0;text-align:center">
+  <div class="wrap">
+    <h2 class="big reveal" data-ka="მზად ხარ დასარტყმელად?" data-en="Ready to smash?">მზად ხარ დასარტყმელად?</h2>
+    <p class="lead reveal" style="margin:14px auto 0" data-ka="ადგილები შეზღუდულია — 32 გუნდი, ერთი ჩემპიონი. დაიკავე შენი ადგილი ახლავე." data-en="Spots are limited — 32 teams, one champion. Claim yours now.">ადგილები შეზღუდულია — 32 გუნდი, ერთი ჩემპიონი. დაიკავე შენი ადგილი ახლავე.</p>
+    <div class="cta" style="display:flex;gap:14px;justify-content:center;margin-top:26px;flex-wrap:wrap">
+      <a class="btn primary" href="#register" onclick="track('cta_click',{location:'final',label:'register'})"><span data-ka="დარეგისტრირდი" data-en="Register now">დარეგისტრირდი</span></a>
+      <a class="btn ghost" href="https://instagram.com/tbilisismashcup" target="_blank" rel="noopener" onclick="track('outbound',{label:'instagram'})">Instagram</a>
     </div>
   </div>
 </section>
@@ -302,14 +405,20 @@
 <script>
 /* ---------- language ---------- */
 function setLang(l){
-  document.documentElement.lang = l==='ka'?'ka':'en';
+  var ka=(l==='ka');
+  document.documentElement.lang = ka?'ka':'en';
   document.querySelectorAll('[data-ka]').forEach(function(el){
-    var t = l==='ka'? el.getAttribute('data-ka') : el.getAttribute('data-en');
+    var t = ka? el.getAttribute('data-ka') : el.getAttribute('data-en');
     if(t!==null) el.textContent = t;
   });
-  document.getElementById('lka').classList.toggle('on', l==='ka');
-  document.getElementById('len').classList.toggle('on', l==='en');
-  document.body.classList.toggle('geo', l==='ka');
+  document.querySelectorAll('[data-ka-ph]').forEach(function(el){
+    var t = ka? el.getAttribute('data-ka-ph') : el.getAttribute('data-en-ph');
+    if(t!==null) el.setAttribute('placeholder', t);
+  });
+  document.getElementById('lka').classList.toggle('on', ka);
+  document.getElementById('len').classList.toggle('on', ka);
+  document.body.classList.toggle('geo', ka);
+  if(window.track) track('language_switch',{lang: ka?'ka':'en'});
 }
 
 /* ---------- countdown ---------- */
@@ -384,6 +493,28 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
     renderer.render(scene,camera);
     requestAnimationFrame(loop);
   })();
+})();
+
+/* ---------- registration form ---------- */
+(function(){
+  var f=document.getElementById('regForm'); if(!f) return;
+  var btn=document.getElementById('regSubmit'), err=document.getElementById('regErr'), ok=document.getElementById('regOk');
+  var started=false;
+  f.addEventListener('focusin',function(){ if(!started){started=true; if(window.track) track('registration_start',{});} });
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    err.classList.remove('err');
+    if(!f.checkValidity()){ f.reportValidity(); return; }
+    btn.setAttribute('disabled','');
+    var data=new FormData(f);
+    fetch('https://formsubmit.co/ajax/tbilisismashcup@gmail.com',{method:'POST',body:data,headers:{'Accept':'application/json'}})
+      .then(function(r){return r.json();})
+      .then(function(j){
+        if(j.success===true || j.success==='true'){ f.style.display='none'; ok.style.display='block'; ok.scrollIntoView({behavior:'smooth',block:'center'}); if(window.track) track('registration_submitted',{}); }
+        else { err.classList.add('err'); btn.removeAttribute('disabled'); if(window.track) track('registration_error',{reason:'api'}); }
+      })
+      .catch(function(){ err.classList.add('err'); btn.removeAttribute('disabled'); if(window.track) track('registration_error',{reason:'network'}); });
+  });
 })();
 </script>
 </body>
