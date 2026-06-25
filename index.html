@@ -312,11 +312,13 @@
     <div class="reg">
       <div class="box reveal">
         <div class="tag" style="color:var(--grey);font-size:12px;letter-spacing:2px" data-ka="გუნდის რეგისტრაცია" data-en="Team registration">გუნდის რეგისტრაცია</div>
-        <form id="regForm" class="rform" novalidate>
+        <form id="regForm" class="rform" action="https://formsubmit.co/nikoabuladze2018@gmail.com" method="POST" enctype="multipart/form-data">
           <input type="hidden" name="_subject" value="New Tbilisi Smash Cup registration">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+          <input type="hidden" name="_next" value="https://smashcup.fit/?registered=1">
+          <input type="hidden" name="_cc" value="tbilisismashcup@gmail.com">
           <div class="fld">
             <label data-ka="გუნდის სახელი" data-en="Team name">გუნდის სახელი</label>
             <input name="Team name" required data-ka-ph="მაგ. Smash Bros" data-en-ph="e.g. Smash Bros" placeholder="მაგ. Smash Bros">
@@ -354,13 +356,18 @@
             <label data-ka="კომენტარი (სურვ.)" data-en="Notes (optional)">კომენტარი (სურვ.)</label>
             <textarea name="Notes" rows="2" data-ka-ph="დამატებითი ინფორმაცია..." data-en-ph="Anything we should know..." placeholder="დამატებითი ინფორმაცია..."></textarea>
           </div>
+          <div class="fld">
+            <label data-ka="გადახდის ქვითარი" data-en="Payment receipt">გადახდის ქვითარი</label>
+            <input type="file" name="attachment" accept="image/*,application/pdf">
+            <div style="font-size:12px;color:var(--grey);margin-top:2px" data-ka="ატვირთე ჩარიცხვის სქრინშოტი ან PDF — აჩქარებს ადგილის დადასტურებას." data-en="Upload your transfer screenshot or PDF — speeds up confirming your spot.">ატვირთე ჩარიცხვის სქრინშოტი ან PDF — აჩქარებს ადგილის დადასტურებას.</div>
+          </div>
           <button type="submit" class="btn primary sb" id="regSubmit"><span data-ka="გაგზავნა" data-en="Submit registration">გაგზავნა</span> →</button>
           <div class="rmsg" id="regErr" data-ka="დაფიქსირდა შეცდომა. სცადე ხელახლა ან მოგვწერე Instagram-ზე." data-en="Something went wrong. Please try again or DM us on Instagram.">დაფიქსირდა შეცდომა. სცადე ხელახლა ან მოგვწერე Instagram-ზე.</div>
         </form>
         <div class="rok" id="regOk">
           <div class="ic">🎾</div>
           <div class="big disp" data-ka="რეგისტრაცია მიღებულია!" data-en="Registration received!">რეგისტრაცია მიღებულია!</div>
-          <p class="lead" style="margin:10px auto 0" data-ka="ახლა გადაიხადე საფასური (240₾) გვერდით მითითებულ ანგარიშზე — ადგილს დაგიდასტურებთ WhatsApp-ით." data-en="Now pay the fee (240₾) to the account shown beside this form — we'll confirm your spot on WhatsApp.">ახლა გადაიხადე საფასური (240₾) გვერდით მითითებულ ანგარიშზე — ადგილს დაგიდასტურებთ WhatsApp-ით.</p>
+          <p class="lead" style="margin:10px auto 0" data-ka="თუ ქვითარი არ აგიტვირთავთ, გადაიხადეთ საფასური (240₾) გვერდით მითითებულ ანგარიშზე და გამოგვიგზავნეთ ქვითარი. ადგილს დაგიდასტურებთ WhatsApp-ით." data-en="If you didn't attach a receipt, pay the fee (240₾) to the account beside this form and send us the receipt. We'll confirm your spot on WhatsApp.">თუ ქვითარი არ აგიტვირთავთ, გადაიხადეთ საფასური (240₾) გვერდით მითითებულ ანგარიშზე და გამოგვიგზავნეთ ქვითარი. ადგილს დაგიდასტურებთ WhatsApp-ით.</p>
         </div>
       </div>
       <div class="box reveal">
@@ -500,20 +507,17 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
   var btn=document.getElementById('regSubmit'), err=document.getElementById('regErr'), ok=document.getElementById('regOk');
   var started=false;
   f.addEventListener('focusin',function(){ if(!started){started=true; if(window.track) track('registration_start',{});} });
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    err.classList.remove('err');
-    if(!f.checkValidity()){ f.reportValidity(); return; }
-    btn.setAttribute('disabled','');
-    var data=new FormData(f);
-    fetch('https://formsubmit.co/ajax/nikoabuladze2018@gmail.com',{method:'POST',body:data,headers:{'Accept':'application/json'}})
-      .then(function(r){return r.json();})
-      .then(function(j){
-        if(j.success===true || j.success==='true'){ f.style.display='none'; ok.style.display='block'; ok.scrollIntoView({behavior:'smooth',block:'center'}); if(window.track) track('registration_submitted',{}); }
-        else { err.classList.add('err'); btn.removeAttribute('disabled'); if(window.track) track('registration_error',{reason:'api'}); }
-      })
-      .catch(function(){ err.classList.add('err'); btn.removeAttribute('disabled'); if(window.track) track('registration_error',{reason:'network'}); });
+  f.addEventListener('submit',function(){
+    if(window.track) track('registration_submit_click',{});
+    setTimeout(function(){ btn.setAttribute('disabled',''); var s=btn.querySelector('span'); if(s) s.textContent=(document.documentElement.lang==='en'?'Sending…':'იგზავნება…'); },0);
   });
+  // FormSubmit redirects back here with ?registered=1 after a successful submit
+  if(location.search.indexOf('registered=1')!==-1){
+    f.style.display='none'; ok.style.display='block';
+    setTimeout(function(){ ok.scrollIntoView({behavior:'smooth',block:'center'}); },250);
+    if(window.track) track('registration_submitted',{});
+    if(history.replaceState) history.replaceState({}, document.title, location.pathname);
+  }
 })();
 </script>
 </body>
