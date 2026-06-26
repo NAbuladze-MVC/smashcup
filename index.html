@@ -303,6 +303,26 @@
   </div>
 </section>
 
+<!-- VENUE / LOCATION -->
+<section id="venue">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-ka="ლოკაცია" data-en="Location">ლოკაცია</div>
+    <h2 class="big reveal" data-ka="სად ვთამაშობთ" data-en="Where we play">სად ვთამაშობთ</h2>
+    <div class="venue-grid">
+      <div class="venue-map reveal">
+        <iframe title="Padelbade Krtsanisi map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Padelbade%20Krtsanisi%2C%20Tbilisi&output=embed"></iframe>
+      </div>
+      <div class="venue-card reveal">
+        <div class="vname" data-ka="პადელბადე კრწანისი" data-en="Padelbade Krtsanisi">პადელბადე კრწანისი</div>
+        <div class="vrow">📍 <span data-ka="კრწანისი, თბილისი" data-en="Krtsanisi, Tbilisi">კრწანისი, თბილისი</span></div>
+        <div class="vrow">🎾 <span data-ka="5 პრემიუმ კორტი" data-en="5 premium courts">5 პრემიუმ კორტი</span></div>
+        <div class="vrow">📅 <span data-ka="4–5 ივლისი 2026" data-en="4–5 July 2026">4–5 ივლისი 2026</span></div>
+        <a class="btn primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Padelbade%20Krtsanisi%2C%20Tbilisi" onclick="track('cta_click',{location:'venue',label:'directions'})"><span data-ka="მარშრუტი" data-en="Get directions">მარშრუტი</span> →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- REGISTER -->
 <section id="register">
   <span class="sectnum">07</span>
@@ -317,7 +337,6 @@
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-          <input type="hidden" name="_next" value="https://smashcup.fit/?registered=1">
           <div class="fld">
             <label data-ka="გუნდის სახელი" data-en="Team name">გუნდის სახელი</label>
             <input name="Team name" required data-ka-ph="მაგ. Smash Bros" data-en-ph="e.g. Smash Bros" placeholder="მაგ. Smash Bros">
@@ -507,24 +526,120 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
   var started=false;
   f.addEventListener('focusin',function(){ if(!started){started=true; if(window.track) track('registration_start',{});} });
   var SHEET_WEBHOOK='https://script.google.com/macros/s/AKfycbxx4GsH_D217GR09aRNCiGZaQAAwhBIVHiB0co3uF26VxQVq-_WfxYikImewRhk8Cxi/exec';
+  // Post into a hidden iframe → the visitor never leaves smashcup.fit, the receipt file still uploads,
+  // and we own the success screen (no dependency on FormSubmit's own redirect / thank-you page).
+  var sink=document.createElement('iframe'); sink.name='fs_sink'; sink.style.display='none';
+  sink.setAttribute('aria-hidden','true'); document.body.appendChild(sink);
+  f.setAttribute('target','fs_sink');
+  var sent=false;
+  function showOk(){
+    f.style.display='none'; ok.style.display='block';
+    try{ ok.scrollIntoView({behavior:'smooth',block:'center'}); }catch(_){}
+    if(window.track) track('registration_submitted',{});
+  }
   f.addEventListener('submit',function(e){
-    if(f.getAttribute('data-go')==='1') return;            // 2nd pass → let native submit go to FormSubmit
-    e.preventDefault();
+    if(sent) return;                      // browser already validated required fields → POST flows to the iframe
+    sent=true;
     if(window.track) track('registration_submit_click',{});
+    try{
+      var fd=new FormData();
+      ['Team name','Player 1','Player 2','Phone','Email','Level','Notes'].forEach(function(n){ var el=f.elements[n]; fd.append(n, el?el.value:''); });
+      fetch(SHEET_WEBHOOK,{method:'POST',body:fd,mode:'no-cors'});   // mirror to the live Google Sheet
+    }catch(_){}
     var s=btn.querySelector('span'); if(s) s.textContent=(document.documentElement.lang==='en'?'Sending…':'იგზავნება…');
     btn.setAttribute('disabled','');
-    var fd=new FormData();
-    ['Team name','Player 1','Player 2','Phone','Email','Level','Notes'].forEach(function(n){ var el=f.elements[n]; fd.append(n, el?el.value:''); });
-    var done=false, go=function(){ if(done) return; done=true; f.setAttribute('data-go','1'); f.submit(); };
-    try{ fetch(SHEET_WEBHOOK,{method:'POST',body:fd,mode:'no-cors'}).then(go,go); }catch(_){ go(); }
-    setTimeout(go,5000);
+    setTimeout(showOk,900);
   });
-  // FormSubmit redirects back here with ?registered=1 after a successful submit
+  // legacy: anyone arriving on an old ?registered=1 link still sees the success screen
   if(location.search.indexOf('registered=1')!==-1){
-    f.style.display='none'; ok.style.display='block';
-    setTimeout(function(){ ok.scrollIntoView({behavior:'smooth',block:'center'}); },250);
-    if(window.track) track('registration_submitted',{});
+    showOk();
     if(history.replaceState) history.replaceState({}, document.title, location.pathname);
+  }
+})();
+</script>
+<style>
+/* venue */
+#venue{padding:84px 0}
+.venue-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:22px;margin-top:28px}
+.venue-map{border:1px solid #1c1f22;border-radius:18px;overflow:hidden;min-height:340px;background:#0d0f10}
+.venue-map iframe{width:100%;height:100%;min-height:340px;border:0;display:block;filter:grayscale(.18) contrast(1.04)}
+.venue-card{background:#0d0f10;border:1px solid #1c1f22;border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:14px;justify-content:center}
+.venue-card .vname{font-size:24px;font-weight:800;color:var(--volt)}
+.venue-card .vrow{color:#cfd3d6;font-size:16px;display:flex;gap:9px;align-items:center}
+.venue-card .btn{margin-top:10px;align-self:flex-start}
+@media(max-width:820px){.venue-grid{grid-template-columns:1fr}.venue-map,.venue-map iframe{min-height:260px}}
+/* deadline popup */
+.dd-overlay{position:fixed;inset:0;z-index:9999;background:rgba(5,6,7,.8);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .35s ease}
+.dd-overlay.show{display:flex;opacity:1}
+.dd-modal{position:relative;width:100%;max-width:440px;background:linear-gradient(165deg,#111311,#0a0a0a);border:1px solid #23271f;border-radius:22px;padding:34px 26px 26px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(198,251,70,.08);transform:translateY(14px) scale(.98);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.dd-overlay.show .dd-modal{transform:none}
+.dd-close{position:absolute;top:11px;right:14px;background:transparent;border:0;color:#7b8077;font-size:26px;line-height:1;cursor:pointer;transition:color .2s}
+.dd-close:hover{color:#fff}
+.dd-eyebrow{color:var(--volt);font-size:12px;letter-spacing:2.5px;text-transform:uppercase;font-weight:800}
+.dd-title{font-size:26px;font-weight:800;color:#fff;margin-top:8px}
+.dd-timer{display:flex;justify-content:center;gap:10px;margin:20px 0 4px}
+.dd-u{background:#0e100d;border:1px solid #23271f;border-radius:13px;padding:12px 6px;min-width:62px}
+.dd-n{font-size:30px;font-weight:800;color:var(--volt);font-variant-numeric:tabular-nums}
+.dd-l{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8b9085;margin-top:3px}
+.dd-sub{color:#c2c6c0;font-size:14px;line-height:1.5;margin:14px auto 0;max-width:350px}
+.dd-cta{display:inline-flex;margin-top:20px}
+.dd-dismiss{display:block;margin:14px auto 0;background:transparent;border:0;color:#7b8077;font-size:13px;cursor:pointer;text-decoration:underline;transition:color .2s}
+.dd-dismiss:hover{color:#cfd3d6}
+@media(max-width:430px){.dd-u{min-width:54px}.dd-n{font-size:26px}.dd-title{font-size:22px}}
+</style>
+
+<!-- DEADLINE POPUP -->
+<div id="ddOverlay" class="dd-overlay" role="dialog" aria-modal="true" aria-label="Registration deadline">
+  <div class="dd-modal">
+    <button class="dd-close" id="ddClose" aria-label="Close">×</button>
+    <div class="dd-eyebrow" data-ka="რეგისტრაცია იხურება" data-en="Registration closes">რეგისტრაცია იხურება</div>
+    <div class="dd-title" id="ddTitle" data-ka="დარჩა მხოლოდ" data-en="Only time left">დარჩა მხოლოდ</div>
+    <div class="dd-timer" id="ddTimer">
+      <div class="dd-u"><div class="dd-n" id="ddd">00</div><div class="dd-l" data-ka="დღე" data-en="days">days</div></div>
+      <div class="dd-u"><div class="dd-n" id="ddh">00</div><div class="dd-l" data-ka="საათი" data-en="hrs">hrs</div></div>
+      <div class="dd-u"><div class="dd-n" id="ddm">00</div><div class="dd-l" data-ka="წუთი" data-en="min">min</div></div>
+      <div class="dd-u"><div class="dd-n" id="dds">00</div><div class="dd-l" data-ka="წამი" data-en="sec">sec</div></div>
+    </div>
+    <div class="dd-sub" id="ddSub" data-ka="ბოლო ვადა — 2 ივლისი, შუაღამე. დაიკავე ადგილი სანამ გვიანი არ არის." data-en="Deadline — July 2, midnight. Claim your spot before it’s gone.">ბოლო ვადა — 2 ივლისი, შუაღამე. დაიკავე ადგილი სანამ გვიანი არ არის.</div>
+    <a class="btn primary dd-cta" href="#register" id="ddReg" onclick="track('cta_click',{location:'deadline_popup',label:'register'})"><span data-ka="დარეგისტრირდი ახლავე" data-en="Register now">დარეგისტრირდი ახლავე</span> →</a>
+    <button class="dd-dismiss" id="ddDismiss" data-ka="მოგვიანებით" data-en="Maybe later">მოგვიანებით</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var ov=document.getElementById('ddOverlay'); if(!ov) return;
+  var DEADLINE=new Date('2026-07-03T00:00:00+04:00').getTime();   // midnight ending July 2 (Tbilisi)
+  var dE=document.getElementById('ddd'),hE=document.getElementById('ddh'),mE=document.getElementById('ddm'),sE=document.getElementById('dds');
+  var pad=function(n){return String(n).padStart(2,'0')};
+  var closed=false;
+  function upd(){
+    var d=DEADLINE-Date.now();
+    if(d<=0){
+      dE.textContent='00';hE.textContent='00';mE.textContent='00';sE.textContent='00';
+      if(!closed){
+        closed=true;
+        var t=document.getElementById('ddTitle'), sub=document.getElementById('ddSub'), reg=document.getElementById('ddReg');
+        t.setAttribute('data-ka','რეგისტრაცია დახურა'); t.setAttribute('data-en','Registration closed');
+        t.textContent=(document.documentElement.lang==='en')?'Registration closed':'რეგისტრაცია დახურა';
+      }
+      return;
+    }
+    dE.textContent=pad(Math.floor(d/86400000));
+    hE.textContent=pad(Math.floor(d%86400000/3600000));
+    mE.textContent=pad(Math.floor(d%3600000/60000));
+    sE.textContent=pad(Math.floor(d%60000/1000));
+  }
+  upd(); setInterval(upd,1000);
+  function close(){ ov.classList.remove('show'); setTimeout(function(){ov.style.display='none';},350); try{sessionStorage.setItem('dd_seen','1');}catch(_){} }
+  document.getElementById('ddClose').addEventListener('click',close);
+  document.getElementById('ddDismiss').addEventListener('click',close);
+  document.getElementById('ddReg').addEventListener('click',close);
+  ov.addEventListener('click',function(e){ if(e.target===ov) close(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && ov.classList.contains('show')) close(); });
+  var seen=false; try{ seen=sessionStorage.getItem('dd_seen')==='1'; }catch(_){}
+  if(!seen && DEADLINE-Date.now()>0){
+    setTimeout(function(){ ov.style.display='flex'; requestAnimationFrame(function(){ov.classList.add('show');}); if(window.track) track('deadline_popup_view',{}); }, 1100);
   }
 })();
 </script>
