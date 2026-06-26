@@ -190,6 +190,12 @@
   @media(max-width:520px){.rform .row{grid-template-columns:1fr}}
   .rform .sb{margin-top:6px;width:100%;justify-content:center;font-size:16px;padding:16px}
   .rform .sb[disabled]{opacity:.6;cursor:wait}
+  /* prevent the registration card/inputs from overflowing the viewport (grid min-width + long IBANs) */
+  .reg{min-width:0}
+  .reg .box{min-width:0;max-width:100%;overflow-wrap:anywhere}
+  .reg .bank{overflow-wrap:anywhere;word-break:break-word}
+  .rform .row,.rform .fld{min-width:0}
+  .rform input,.rform select,.rform textarea{width:100%;min-width:0;max-width:100%}
   .rmsg{margin-top:6px;font-size:14px;border-radius:12px;padding:12px 14px;display:none}
   .rmsg.err{display:block;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.4);color:#ffb3b3}
   .rok{display:none;text-align:center;padding:18px 0}
