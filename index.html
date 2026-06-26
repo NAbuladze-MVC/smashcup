@@ -9,6 +9,8 @@
 <meta name="apple-mobile-web-app-title" content="Smash Cup">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nabuladze-mvc.github.io/smashcup/">
 <meta property="og:title" content="Tbilisi Smash Cup — 4–5 July 2026">
@@ -76,6 +78,20 @@
   .btn.ghost:hover{border-color:var(--volt);color:var(--volt)}
   nav .btn{padding:11px 20px;font-size:12.5px}
   @media(max-width:720px){nav .desk{display:none}}
+  /* mobile hamburger menu */
+  .menu-btn{display:none;flex-direction:column;justify-content:center;gap:5px;width:46px;height:42px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;cursor:pointer;padding:0 11px}
+  .menu-btn span{display:block;height:2px;background:var(--volt);border-radius:2px;transition:.25s}
+  body.menu-open .menu-btn span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  body.menu-open .menu-btn span:nth-child(2){opacity:0}
+  body.menu-open .menu-btn span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .navmenu{position:fixed;top:76px;left:12px;right:12px;z-index:49;background:#0d0f0a;border:1px solid var(--line);border-radius:18px;padding:10px;display:flex;flex-direction:column;gap:2px;box-shadow:0 24px 60px rgba(0,0,0,.6);opacity:0;transform:translateY(-12px);pointer-events:none;transition:.25s}
+  body.menu-open .navmenu{opacity:1;transform:none;pointer-events:auto}
+  .navmenu a{display:block;padding:14px 16px;border-radius:12px;color:#e8eae5;font-weight:700;font-size:16px;letter-spacing:.3px}
+  .navmenu a:active,.navmenu a:hover{background:rgba(198,251,70,.08);color:var(--volt)}
+  .navmenu a.reg{background:var(--volt);color:#000;text-align:center;margin-top:6px;text-transform:uppercase;letter-spacing:1px;font-size:14px}
+  .navmenu-scrim{position:fixed;inset:0;z-index:48;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.25s}
+  body.menu-open .navmenu-scrim{opacity:1;pointer-events:auto}
+  @media(max-width:720px){.menu-btn{display:flex}}
 
   /* HERO */
   #hero{height:100vh;min-height:680px;display:flex;align-items:center;overflow:hidden;padding:90px 0 28px}
@@ -190,8 +206,23 @@
       <button id="len" onclick="setLang('en')">ENG</button>
     </div>
     <a class="btn primary desk" href="#register" onclick="track('cta_click',{location:'nav',label:'register'})"><span data-ka="რეგისტრაცია" data-en="Register">რეგისტრაცია</span></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="navmenu-scrim" id="navScrim" onclick="closeMenu()"></div>
+<nav-menu class="navmenu" id="navMenu" role="menu" aria-hidden="true">
+  <a role="menuitem" href="#about" onclick="closeMenu()"><span data-ka="ჩვენ შესახებ" data-en="About">ჩვენ შესახებ</span></a>
+  <a role="menuitem" href="#format" onclick="closeMenu()"><span data-ka="ფორმატი" data-en="Format">ფორმატი</span></a>
+  <a role="menuitem" href="#prize" onclick="closeMenu()"><span data-ka="საპრიზო ფონდი" data-en="Prize fund">საპრიზო ფონდი</span></a>
+  <a role="menuitem" href="#schedule" onclick="closeMenu()"><span data-ka="განრიგი" data-en="Schedule">განრიგი</span></a>
+  <a role="menuitem" href="#venue" onclick="closeMenu()"><span data-ka="ლოკაცია" data-en="Location">ლოკაცია</span></a>
+  <a role="menuitem" class="reg" href="#register" onclick="track('cta_click',{location:'mobilemenu',label:'register'});closeMenu()"><span data-ka="რეგისტრაცია" data-en="Register">რეგისტრაცია</span></a>
+</nav-menu>
+<script>
+function toggleMenu(){var o=document.body.classList.toggle('menu-open');var b=document.getElementById('menuBtn');if(b)b.setAttribute('aria-expanded',o);}
+function closeMenu(){document.body.classList.remove('menu-open');var b=document.getElementById('menuBtn');if(b)b.setAttribute('aria-expanded','false');}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
+</script>
 
 <!-- HERO -->
 <section id="hero">
