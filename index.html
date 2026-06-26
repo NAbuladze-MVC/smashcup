@@ -211,16 +211,17 @@
 </nav>
 <div class="navmenu-scrim" id="navScrim" onclick="closeMenu()"></div>
 <nav-menu class="navmenu" id="navMenu" role="menu" aria-hidden="true">
-  <a role="menuitem" href="#about" onclick="closeMenu()"><span data-ka="ჩვენ შესახებ" data-en="About">ჩვენ შესახებ</span></a>
-  <a role="menuitem" href="#format" onclick="closeMenu()"><span data-ka="ფორმატი" data-en="Format">ფორმატი</span></a>
-  <a role="menuitem" href="#prize" onclick="closeMenu()"><span data-ka="საპრიზო ფონდი" data-en="Prize fund">საპრიზო ფონდი</span></a>
-  <a role="menuitem" href="#schedule" onclick="closeMenu()"><span data-ka="განრიგი" data-en="Schedule">განრიგი</span></a>
-  <a role="menuitem" href="#venue" onclick="closeMenu()"><span data-ka="ლოკაცია" data-en="Location">ლოკაცია</span></a>
-  <a role="menuitem" class="reg" href="#register" onclick="track('cta_click',{location:'mobilemenu',label:'register'});closeMenu()"><span data-ka="რეგისტრაცია" data-en="Register">რეგისტრაცია</span></a>
+  <a role="menuitem" href="#about" onclick="navTo(event,'about')"><span data-ka="ჩვენ შესახებ" data-en="About">ჩვენ შესახებ</span></a>
+  <a role="menuitem" href="#format" onclick="navTo(event,'format')"><span data-ka="ფორმატი" data-en="Format">ფორმატი</span></a>
+  <a role="menuitem" href="#prize" onclick="navTo(event,'prize')"><span data-ka="საპრიზო ფონდი" data-en="Prize fund">საპრიზო ფონდი</span></a>
+  <a role="menuitem" href="#schedule" onclick="navTo(event,'schedule')"><span data-ka="განრიგი" data-en="Schedule">განრიგი</span></a>
+  <a role="menuitem" href="#venue" onclick="navTo(event,'venue')"><span data-ka="ლოკაცია" data-en="Location">ლოკაცია</span></a>
+  <a role="menuitem" class="reg" href="#register" onclick="track('cta_click',{location:'mobilemenu',label:'register'});navTo(event,'register')"><span data-ka="რეგისტრაცია" data-en="Register">რეგისტრაცია</span></a>
 </nav-menu>
 <script>
 function toggleMenu(){var o=document.body.classList.toggle('menu-open');var b=document.getElementById('menuBtn');if(b)b.setAttribute('aria-expanded',o);}
 function closeMenu(){document.body.classList.remove('menu-open');var b=document.getElementById('menuBtn');if(b)b.setAttribute('aria-expanded','false');}
+function navTo(e,id){if(e&&e.preventDefault)e.preventDefault();closeMenu();setTimeout(function(){var el=document.getElementById(id);if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-64,behavior:'smooth'});},60);}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
 </script>
 
