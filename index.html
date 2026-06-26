@@ -569,7 +569,7 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 .venue-card .btn{margin-top:10px;align-self:flex-start}
 @media(max-width:820px){.venue-grid{grid-template-columns:1fr}.venue-map,.venue-map iframe{min-height:260px}}
 /* deadline popup */
-.dd-overlay{position:fixed;inset:0;z-index:9999;background:rgba(6,7,8,.93);display:none;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .3s ease;will-change:opacity}
+.dd-overlay{position:fixed;inset:0;z-index:9999;background:rgba(6,7,8,.93);display:none;align-items:center;justify-content:center;padding:20px;opacity:0}
 .dd-overlay.show{display:flex;opacity:1}
 .dd-modal{position:relative;width:100%;max-width:440px;background:linear-gradient(165deg,#111311,#0a0a0a);border:1px solid #23271f;border-radius:22px;padding:34px 26px 26px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(198,251,70,.08);transform:translateY(14px) scale(.98);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .dd-overlay.show .dd-modal{transform:none}
