@@ -543,7 +543,8 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
     if(window.track) track('registration_submit_click',{});
     try{
       var fd=new FormData();
-      ['Team name','Player 1','Player 2','Phone','Email','Level','Notes'].forEach(function(n){ var el=f.elements[n]; fd.append(n, el?el.value:''); });
+      var safe=function(v){ v=(v==null?'':String(v)); return /^[=+\-@]/.test(v) ? ("'"+v) : v; };  // stop Sheets parsing +995… / =… as a formula
+      ['Team name','Player 1','Player 2','Phone','Email','Level','Notes'].forEach(function(n){ var el=f.elements[n]; fd.append(n, safe(el?el.value:'')); });
       fetch(SHEET_WEBHOOK,{method:'POST',body:fd,mode:'no-cors'});   // mirror to the live Google Sheet
     }catch(_){}
     var s=btn.querySelector('span'); if(s) s.textContent=(document.documentElement.lang==='en'?'Sending…':'იგზავნება…');
