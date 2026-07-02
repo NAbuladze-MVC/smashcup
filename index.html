@@ -213,7 +213,7 @@
       <button id="lka" class="on" onclick="setLang('ka')">ქარ</button>
       <button id="len" onclick="setLang('en')">ENG</button>
     </div>
-    <a class="btn primary desk" href="#register" onclick="track('cta_click',{location:'nav',label:'register'})"><span data-ka="რეგისტრაცია" data-en="Register">რეგისტრაცია</span></a>
+    <a class="btn primary desk" href="#register" onclick="track('cta_click',{location:'nav',label:'register'})"><span data-ka="სავსეა" data-en="Full">სავსეა</span></a>
     <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -224,7 +224,7 @@
   <a role="menuitem" href="#prize" onclick="navTo(event,'prize')"><span data-ka="საპრიზო ფონდი" data-en="Prize fund">საპრიზო ფონდი</span></a>
   <a role="menuitem" href="#schedule" onclick="navTo(event,'schedule')"><span data-ka="განრიგი" data-en="Schedule">განრიგი</span></a>
   <a role="menuitem" href="#venue" onclick="navTo(event,'venue')"><span data-ka="ლოკაცია" data-en="Location">ლოკაცია</span></a>
-  <a role="menuitem" class="reg" href="#register" onclick="track('cta_click',{location:'mobilemenu',label:'register'});navTo(event,'register')"><span data-ka="რეგისტრაცია" data-en="Register">რეგისტრაცია</span></a>
+  <a role="menuitem" class="reg" href="#register" onclick="track('cta_click',{location:'mobilemenu',label:'register'});navTo(event,'register')"><span data-ka="სავსეა" data-en="Full">სავსეა</span></a>
 </nav-menu>
 <script>
 function toggleMenu(){var o=document.body.classList.toggle('menu-open');var b=document.getElementById('menuBtn');if(b)b.setAttribute('aria-expanded',o);}
@@ -249,7 +249,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();
       <div class="u"><div class="n" id="cs">00</div><div class="l" data-ka="წამი" data-en="sec">sec</div></div>
     </div>
     <div class="cta">
-      <a class="btn primary" href="#register" onclick="track('cta_click',{location:'hero',label:'register'})"><span data-ka="დარეგისტრირდი" data-en="Register now">დარეგისტრირდი</span></a>
+      <a class="btn primary" href="#register" onclick="track('cta_click',{location:'hero',label:'register'})"><span data-ka="სავსეა" data-en="Full">სავსეა</span></a>
       <a class="btn ghost" href="#format" onclick="track('cta_click',{location:'hero',label:'format'})"><span data-ka="ფორმატი" data-en="See format">ფორმატი</span></a>
     </div>
   </div>
@@ -368,78 +368,41 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();
   <span class="sectnum">07</span>
   <div class="wrap">
     <div class="eyebrow reveal" data-ka="რეგისტრაცია" data-en="Registration">რეგისტრაცია</div>
-    <h2 class="big reveal" data-ka="დაიკავე შენი ადგილი" data-en="Claim your spot">დაიკავე შენი ადგილი</h2>
-    <div class="reg">
-      <div class="box reveal">
-        <div class="tag" style="color:var(--grey);font-size:12px;letter-spacing:2px" data-ka="გუნდის რეგისტრაცია" data-en="Team registration">გუნდის რეგისტრაცია</div>
-        <form id="regForm" class="rform" action="https://formsubmit.co/tbilisismashcup@gmail.com" method="POST" enctype="multipart/form-data">
-          <input type="hidden" name="_subject" value="New Tbilisi Smash Cup registration">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-          <div class="fld">
-            <label data-ka="გუნდის სახელი" data-en="Team name">გუნდის სახელი</label>
-            <input name="Team name" required data-ka-ph="მაგ. Smash Bros" data-en-ph="e.g. Smash Bros" placeholder="მაგ. Smash Bros">
-          </div>
-          <div class="row">
-            <div class="fld">
-              <label data-ka="მოთამაშე 1" data-en="Player 1">მოთამაშე 1</label>
-              <input name="Player 1" required data-ka-ph="სახელი გვარი" data-en-ph="Full name" placeholder="სახელი გვარი">
-            </div>
-            <div class="fld">
-              <label data-ka="მოთამაშე 2" data-en="Player 2">მოთამაშე 2</label>
-              <input name="Player 2" required data-ka-ph="სახელი გვარი" data-en-ph="Full name" placeholder="სახელი გვარი">
-            </div>
-          </div>
-          <div class="row">
-            <div class="fld">
-              <label data-ka="ტელეფონი (WhatsApp)" data-en="Phone (WhatsApp)">ტელეფონი (WhatsApp)</label>
-              <input name="Phone" type="tel" required data-ka-ph="+995 5xx xx xx xx" data-en-ph="+995 5xx xx xx xx" placeholder="+995 5xx xx xx xx">
-            </div>
-            <div class="fld">
-              <label data-ka="ელ. ფოსტა (სურვ.)" data-en="Email (optional)">ელ. ფოსტა (სურვ.)</label>
-              <input name="Email" type="email" data-ka-ph="you@email.com" data-en-ph="you@email.com" placeholder="you@email.com">
-            </div>
-          </div>
-          <div class="fld">
-            <label data-ka="დონე" data-en="Level">დონე</label>
-            <select name="Level">
-              <option value="" data-ka="აირჩიე დონე" data-en="Select level">აირჩიე დონე</option>
-              <option value="Beginner" data-ka="დამწყები" data-en="Beginner">დამწყები</option>
-              <option value="Intermediate" data-ka="საშუალო" data-en="Intermediate">საშუალო</option>
-              <option value="Advanced" data-ka="გამოცდილი" data-en="Advanced">გამოცდილი</option>
-            </select>
-          </div>
-          <div class="fld">
-            <label data-ka="კომენტარი (სურვ.)" data-en="Notes (optional)">კომენტარი (სურვ.)</label>
-            <textarea name="Notes" rows="2" data-ka-ph="დამატებითი ინფორმაცია..." data-en-ph="Anything we should know..." placeholder="დამატებითი ინფორმაცია..."></textarea>
-          </div>
-          <div class="fld">
-            <label data-ka="გადახდის ქვითარი" data-en="Payment receipt">გადახდის ქვითარი</label>
-            <input type="file" name="attachment" accept="image/*,application/pdf">
-            <div style="font-size:12px;color:var(--grey);margin-top:2px" data-ka="ატვირთე ჩარიცხვის სქრინშოტი ან PDF — აჩქარებს ადგილის დადასტურებას." data-en="Upload your transfer screenshot or PDF — speeds up confirming your spot.">ატვირთე ჩარიცხვის სქრინშოტი ან PDF — აჩქარებს ადგილის დადასტურებას.</div>
-          </div>
-          <button type="submit" class="btn primary sb" id="regSubmit"><span data-ka="გაგზავნა" data-en="Submit registration">გაგზავნა</span> →</button>
-          <div class="rmsg" id="regErr" data-ka="დაფიქსირდა შეცდომა. სცადე ხელახლა ან მოგვწერე Instagram-ზე." data-en="Something went wrong. Please try again or DM us on Instagram.">დაფიქსირდა შეცდომა. სცადე ხელახლა ან მოგვწერე Instagram-ზე.</div>
-        </form>
-        <div class="rok" id="regOk">
-          <div class="ic">🎾</div>
-          <div class="big disp" data-ka="რეგისტრაცია მიღებულია!" data-en="Registration received!">რეგისტრაცია მიღებულია!</div>
-          <p class="lead" style="margin:10px auto 0" data-ka="თუ ქვითარი არ აგიტვირთავთ, გადაიხადეთ საფასური (240₾) გვერდით მითითებულ ანგარიშზე და გამოგვიგზავნეთ ქვითარი. ადგილს დაგიდასტურებთ WhatsApp-ით." data-en="If you didn't attach a receipt, pay the fee (240₾) to the account beside this form and send us the receipt. We'll confirm your spot on WhatsApp.">თუ ქვითარი არ აგიტვირთავთ, გადაიხადეთ საფასური (240₾) გვერდით მითითებულ ანგარიშზე და გამოგვიგზავნეთ ქვითარი. ადგილს დაგიდასტურებთ WhatsApp-ით.</p>
-        </div>
-      </div>
-      <div class="box reveal">
-        <div class="tag" style="color:var(--grey);font-size:12px;letter-spacing:2px" data-ka="საფასური გუნდზე" data-en="Fee per team">საფასური გუნდზე</div>
-        <div class="fee">240₾</div>
-        <div class="tag" style="color:var(--grey);font-size:12px;letter-spacing:2px;margin-top:18px" data-ka="გადახდის რეკვიზიტები" data-en="Payment details">გადახდის რეკვიზიტები</div>
-        <div class="bank">TBC · <b>GE33TB7432245061100116</b></div>
-        <div class="bank">BOG · <b>GE50BG0000000611468898</b></div>
-        <div class="bank" data-ka="მიმღები · არჩილ შარაშიძე" data-en="Recipient · Archil Sharashidze">მიმღები · არჩილ შარაშიძე</div>
-        <div class="bank" data-ka="დანიშნულება · გუნდის სახელი + Smash Cup" data-en="Reference · Team name + Smash Cup">დანიშნულება · გუნდის სახელი + Smash Cup</div>
-        <p class="lead" style="font-size:14px;margin-top:18px" data-ka="ასაკი 16+. მონაწილეობა ვერ მიიღებენ პროფესიონალები, სრულ განაკვეთზე მწვრთნელები და ფედერაციის A-კატეგორიის მოთამაშეები." data-en="Age 16+. Pros, full-time coaches and Federation A-category players are not eligible.">ასაკი 16+. მონაწილეობა ვერ მიიღებენ პროფესიონალები, სრულ განაკვეთზე მწვრთნელები და ფედერაციის A-კატეგორიის მოთამაშეები.</p>
-      </div>
+    <h2 class="big reveal" data-ka="რეგისტრაცია დასრულდა" data-en="Registration closed">რეგისტრაცია დასრულდა</h2>
+    <div class="regfull reveal">
+      <div class="rf-ic" aria-hidden="true">✓</div>
+      <div class="rf-big" data-ka="სავსეა!" data-en="Full!">სავსეა!</div>
+      <div class="rf-sub" data-ka="ყველა ადგილი დაკავებულია" data-en="All spots are taken">ყველა ადგილი დაკავებულია</div>
+      <div class="rf-thanks" data-ka="მადლობა ინტერესისთვის — შევხვდებით კორტებზე." data-en="Thanks for your interest — see you on the courts.">მადლობა ინტერესისთვის — შევხვდებით კორტებზე.</div>
+      <div class="rf-div"></div>
+      <p class="rf-p1" data-ka="შემდეგი ტურნირი მალე." data-en="The next tournament is coming soon.">შემდეგი ტურნირი მალე.</p>
+      <p class="rf-p2" data-ka="დატოვე ელ. ფოსტა და პირველი შეიტყე." data-en="Leave your email and be the first to know.">დატოვე ელ. ფოსტა და პირველი შეიტყე.</p>
+      <form id="waitForm" class="rf-form" action="https://formsubmit.co/tbilisismashcup@gmail.com" method="POST" target="wl_sink">
+        <input type="hidden" name="_subject" value="Smash Cup — next tournament waitlist">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <input id="waitEmail" name="Email" type="email" required placeholder="you@email.com" aria-label="Email">
+        <button type="submit" class="btn primary" id="waitBtn"><span data-ka="შემატყობინე" data-en="Notify me">შემატყობინე</span> →</button>
+      </form>
+      <div class="rf-ok" id="waitOk" data-ka="მადლობა! შემდეგ ტურნირზე პირველი შეგატყობინებთ." data-en="Thanks! We'll notify you first about the next tournament.">მადლობა! შემდეგ ტურნირზე პირველი შეგატყობინებთ.</div>
     </div>
   </div>
+  <style>
+  .regfull{max-width:520px;margin:26px auto 0;background:#0e100d;border:1px solid #24281f;border-radius:20px;padding:38px 30px;text-align:center}
+  .rf-ic{width:76px;height:76px;margin:0 auto 8px;border:4px solid var(--volt);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--volt);font-size:36px;font-weight:800}
+  .rf-big{font-size:46px;font-weight:800;color:var(--volt);line-height:1.05}
+  .rf-sub{font-size:18px;color:#e9ece6;margin-top:4px}
+  .rf-thanks{font-size:15px;color:var(--grey);margin-top:8px}
+  .rf-div{height:1px;background:#24281f;margin:24px 0}
+  .rf-p1{font-size:17px;color:#e9ece6;margin:0 0 6px}
+  .rf-p2{font-size:15px;color:#d3d7cf;margin:0 0 16px}
+  .rf-form{display:flex;gap:8px}
+  .rf-form input{flex:1;min-width:0;background:#080a07;border:1px solid #2a2f24;border-radius:11px;padding:14px 15px;color:#fff;font-size:16px}
+  .rf-form .btn{white-space:nowrap}
+  .rf-ok{display:none;color:var(--volt);font-size:16px;font-weight:700;margin-top:14px}
+  @media(max-width:520px){.rf-form{flex-direction:column}.rf-big{font-size:40px}}
+  </style>
 </section>
 
 <!-- CLOSING CTA -->
@@ -448,7 +411,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();
     <h2 class="big reveal" data-ka="მზად ხარ დასარტყმელად?" data-en="Ready to smash?">მზად ხარ დასარტყმელად?</h2>
     <p class="lead reveal" style="margin:14px auto 0" data-ka="ადგილები შეზღუდულია — 32 გუნდი, ერთი ჩემპიონი. დაიკავე შენი ადგილი ახლავე." data-en="Spots are limited — 32 teams, one champion. Claim yours now.">ადგილები შეზღუდულია — 32 გუნდი, ერთი ჩემპიონი. დაიკავე შენი ადგილი ახლავე.</p>
     <div class="cta" style="display:flex;gap:14px;justify-content:center;margin-top:26px;flex-wrap:wrap">
-      <a class="btn primary" href="#register" onclick="track('cta_click',{location:'final',label:'register'})"><span data-ka="დარეგისტრირდი" data-en="Register now">დარეგისტრირდი</span></a>
+      <a class="btn primary" href="#register" onclick="track('cta_click',{location:'final',label:'register'})"><span data-ka="სავსეა" data-en="Full">სავსეა</span></a>
       <a class="btn ghost" href="https://instagram.com/tbilisismashcup" target="_blank" rel="noopener" onclick="track('outbound',{label:'instagram'})">Instagram</a>
     </div>
   </div>
@@ -559,43 +522,21 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
   })();
 })();
 
-/* ---------- registration form ---------- */
+/* ---------- next-tournament waitlist ---------- */
 (function(){
-  var f=document.getElementById('regForm'); if(!f) return;
-  var btn=document.getElementById('regSubmit'), err=document.getElementById('regErr'), ok=document.getElementById('regOk');
-  var started=false;
-  f.addEventListener('focusin',function(){ if(!started){started=true; if(window.track) track('registration_start',{});} });
-  var SHEET_WEBHOOK='https://script.google.com/macros/s/AKfycbxx4GsH_D217GR09aRNCiGZaQAAwhBIVHiB0co3uF26VxQVq-_WfxYikImewRhk8Cxi/exec';
-  // Post into a hidden iframe → the visitor never leaves smashcup.fit, the receipt file still uploads,
-  // and we own the success screen (no dependency on FormSubmit's own redirect / thank-you page).
-  var sink=document.createElement('iframe'); sink.name='fs_sink'; sink.style.display='none';
-  sink.setAttribute('aria-hidden','true'); document.body.appendChild(sink);
-  f.setAttribute('target','fs_sink');
+  var f=document.getElementById('waitForm'); if(!f) return;
+  var ok=document.getElementById('waitOk'), btn=document.getElementById('waitBtn');
+  var WAITLIST_WEBHOOK='';
+  var sink=document.createElement('iframe'); sink.name='wl_sink'; sink.style.display='none'; sink.setAttribute('aria-hidden','true'); document.body.appendChild(sink);
   var sent=false;
-  function showOk(){
-    f.style.display='none'; ok.style.display='block';
-    try{ ok.scrollIntoView({behavior:'smooth',block:'center'}); }catch(_){}
-    if(window.track) track('registration_submitted',{});
-  }
   f.addEventListener('submit',function(e){
-    if(sent) return;                      // browser already validated required fields → POST flows to the iframe
-    sent=true;
-    if(window.track) track('registration_submit_click',{});
-    try{
-      var fd=new FormData();
-      var safe=function(v){ v=(v==null?'':String(v)); return /^[=+\-@]/.test(v) ? ("'"+v) : v; };  // stop Sheets parsing +995… / =… as a formula
-      ['Team name','Player 1','Player 2','Phone','Email','Level','Notes'].forEach(function(n){ var el=f.elements[n]; fd.append(n, safe(el?el.value:'')); });
-      fetch(SHEET_WEBHOOK,{method:'POST',body:fd,mode:'no-cors'});   // mirror to the live Google Sheet
-    }catch(_){}
-    var s=btn.querySelector('span'); if(s) s.textContent=(document.documentElement.lang==='en'?'Sending…':'იგზავნება…');
+    if(sent) return; sent=true;
+    if(window.track) track('waitlist_submit',{});
+    try{ if(WAITLIST_WEBHOOK){ var email=(document.getElementById('waitEmail')||{}).value||''; var fd=new FormData(); fd.append('Email',email); fd.append('When',new Date().toISOString()); fetch(WAITLIST_WEBHOOK,{method:'POST',body:fd,mode:'no-cors'}); } }catch(_){}
+    var sp=btn.querySelector('span'); if(sp) sp.textContent=(document.documentElement.lang==='en'?'Sending…':'იგზავნება…');
     btn.setAttribute('disabled','');
-    setTimeout(showOk,900);
+    setTimeout(function(){ f.style.display='none'; ok.style.display='block'; try{ok.scrollIntoView({behavior:'smooth',block:'center'});}catch(_){} if(window.track) track('waitlist_submitted',{}); },800);
   });
-  // legacy: anyone arriving on an old ?registered=1 link still sees the success screen
-  if(location.search.indexOf('registered=1')!==-1){
-    showOk();
-    if(history.replaceState) history.replaceState({}, document.title, location.pathname);
-  }
 })();
 </script>
 <style>
@@ -693,7 +634,7 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
   ov.addEventListener('click',function(e){ if(e.target===ov) close(); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape' && ov.classList.contains('show')) close(); });
   var seen=false; try{ seen=sessionStorage.getItem('dd_seen')==='1'; }catch(_){}
-  if(!seen && DEADLINE-Date.now()>0){
+  if(false){
     setTimeout(function(){ ov.style.display='flex'; requestAnimationFrame(function(){ov.classList.add('show'); setTimeout(function(){ov.style.opacity='1';},340);}); if(window.track) track('deadline_popup_view',{}); }, 1100);
   }
 })();
